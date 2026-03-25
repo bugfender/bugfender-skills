@@ -1,0 +1,13 @@
+interface:
+  display_name: "Bugfender SDK Setup"
+  short_description: "Set up Bugfender with minimal effort"
+  default_prompt: "Use $bugfender-sdk-setup to detect the app platform, fetch the right Bugfender SDK snippet, adapt it to the repo structure, and explain only the final verification step."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "bugfender"
+      description: "Bugfender MCP server"
+
+policy:
+  allow_implicit_invocation: true
