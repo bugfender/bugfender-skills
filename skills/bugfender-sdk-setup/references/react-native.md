@@ -40,8 +40,12 @@ import { Bugfender } from "@bugfender/rn-bugfender";
 
 Bugfender.init({
   appKey: "{APP_KEY}",
+  baseURL: "{BASE_URL}",
+  apiURL: "{SDK_API_URL}",
 });
 ```
+
+Only include `baseURL` and `apiURL` when custom non-default URLs are provided.
 
 Helpful defaults when appropriate:
 
@@ -66,6 +70,7 @@ Bugfender.init({
 - keep setup in the entry file rather than spreading it through hooks
 - if Expo is detected, tell the developer they need a native build, not Expo Go
 - for bare RN, rely on autolinking on modern React Native
+- when custom `BASE_URL` or `SDK_API_URL` values are provided, wire them through `baseURL` and `apiURL` in `Bugfender.init(...)`
 
 ## Verification
 

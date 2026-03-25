@@ -30,11 +30,15 @@ implementation 'com.bugfender.sdk:android:3.+'
 Initialize in the `Application` class `onCreate()`:
 
 ```kotlin
+Bugfender.setBaseUrl("{BASE_URL}")
+Bugfender.setApiUrl("{SDK_API_URL}")
 Bugfender.init(this, "{APP_KEY}", BuildConfig.DEBUG, true)
 Bugfender.enableCrashReporting()
 Bugfender.enableUIEventLogging(this)
 Bugfender.enableLogcatLogging()
 ```
+
+If custom dashboard or API URLs are provided, set them before `Bugfender.init(...)`.
 
 If you create a new `Application` class, register it in `AndroidManifest.xml` with `android:name`.
 
@@ -53,6 +57,7 @@ If you create a new `Application` class, register it in `AndroidManifest.xml` wi
 - `enableCrashReporting()` is usually the first optional feature to offer
 - keep `enableLogcatLogging()` Android-specific and opt-in
 - use `enableUIEventLogging()` only when the user asked for it or the setup explicitly includes it
+- when custom `BASE_URL` or `SDK_API_URL` values are provided, wire them with `Bugfender.setBaseUrl(...)` and `Bugfender.setApiUrl(...)` before init
 
 ## Verification
 

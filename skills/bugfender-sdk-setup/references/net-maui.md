@@ -27,6 +27,7 @@ For Android:
 
 - initialize in `Platforms/Android/MainApplication.cs`
 - create an application class if the project does not already have one
+- if custom non-default URLs are provided, pass them as `apiUri` and `baseUri` in `BugfenderOptions`
 
 ## Integration points
 
@@ -42,4 +43,3 @@ For Android:
 ## Verification
 
 Emit one startup log or warning through `BugfenderBinding.Instance` and confirm the device URL resolves in Bugfender.
-

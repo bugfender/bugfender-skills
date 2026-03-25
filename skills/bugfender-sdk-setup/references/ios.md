@@ -23,11 +23,16 @@ Preferred install paths:
 Initialize in `application(_:didFinishLaunchingWithOptions:)`:
 
 ```swift
+Bugfender.setBaseURL(URL(string: "{BASE_URL}")!)
+Bugfender.setApiURL(URL(string: "{SDK_API_URL}")!)
 Bugfender.activateLogger("{APP_KEY}")
 Bugfender.enableCrashReporting()
 Bugfender.enableNSLogLogging()
 Bugfender.enableUIEventLogging()
 ```
+
+If the setup context includes a custom dashboard base URL or SDK API URL, apply them before `activateLogger(...)`.
+For on-prem or non-default environments, treat `setBaseURL(...)` and `setApiURL(...)` as first-class integration hooks, not optional commentary.
 
 If the app is SwiftUI-only, add an `AppDelegate` via `@UIApplicationDelegateAdaptor`.
 
@@ -43,6 +48,7 @@ If the app is SwiftUI-only, add an `AppDelegate` via `@UIApplicationDelegateAdap
 - prefer Swift Package Manager if the repo is already on modern Xcode and no other package manager is enforced
 - prefer AppDelegate initialization even in SwiftUI apps via adaptor pattern
 - keep optional logging helpers off until the requested feature set is clear
+- when custom `BASE_URL` or `SDK_API_URL` values are provided, wire them into `Bugfender.setBaseURL(...)` and `Bugfender.setApiURL(...)` before activation
 
 ## Symbolication
 

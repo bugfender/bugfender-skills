@@ -26,8 +26,12 @@ import { Bugfender } from "@bugfender/capacitor";
 
 Bugfender.init({
   appKey: "{APP_KEY}",
+  baseURL: "{BASE_URL}",
+  apiURL: "{SDK_API_URL}",
 });
 ```
+
+Only include `baseURL` and `apiURL` when custom non-default URLs are provided.
 
 ## Integration points
 
@@ -46,4 +50,3 @@ After init resolves, log one startup message:
 ```ts
 Bugfender.log("Bugfender initialized");
 ```
-

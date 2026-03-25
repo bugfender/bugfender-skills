@@ -23,8 +23,12 @@ Initialize in the HTML page or the main JS file:
 ```js
 Bugfender.init({
   appKey: "{APP_KEY}",
+  baseURL: "{BASE_URL}",
+  apiURL: "{SDK_API_URL}",
 });
 ```
+
+Only include `baseURL` and `apiURL` when custom non-default URLs are provided.
 
 ## Integration points
 
@@ -42,4 +46,3 @@ Emit one simple log:
 ```js
 Bugfender.log("Bugfender initialized");
 ```
-

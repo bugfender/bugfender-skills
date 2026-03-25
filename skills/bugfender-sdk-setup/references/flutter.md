@@ -29,8 +29,14 @@ flutter pub get
 Initialize in `lib/main.dart` and wrap startup with `handleUncaughtErrors(...)`:
 
 ```dart
-await FlutterBugfender.init("{APP_KEY}");
+await FlutterBugfender.init(
+  "{APP_KEY}",
+  apiUri: Uri.parse("{SDK_API_URL}"),
+  baseUri: Uri.parse("{BASE_URL}"),
+);
 ```
+
+Only include `apiUri` and `baseUri` when custom non-default URLs are provided.
 
 ## Integration points
 
@@ -52,4 +58,3 @@ Emit one test log after initialization:
 ```dart
 FlutterBugfender.log("Bugfender initialized");
 ```
-

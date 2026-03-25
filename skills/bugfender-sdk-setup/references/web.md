@@ -31,8 +31,12 @@ import { Bugfender } from "@bugfender/sdk";
 
 Bugfender.init({
   appKey: "{APP_KEY}",
+  baseURL: "{BASE_URL}",
+  apiURL: "{SDK_API_URL}",
 });
 ```
+
+Only include `baseURL` and `apiURL` when custom non-default URLs are provided.
 
 Useful low-friction options when appropriate:
 

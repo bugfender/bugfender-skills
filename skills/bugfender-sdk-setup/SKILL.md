@@ -82,12 +82,50 @@ Typical options to confirm:
 
 If the user already gave strong clues, infer the feature set and skip the question.
 
+Default question shape:
+
+- ask one short question that names only the relevant options for the detected platform
+- keep the question compact, for example:
+  - mobile/native: `Do you want the recommended setup with crash reporting and UI event logging, or basic remote logging only?`
+  - Android when relevant: `Do you want the recommended setup with crash reporting and UI event logging, or should I also include Android logcat capture?`
+  - web frameworks: `Do you want the recommended setup with crash/error capture and UI event logging, or basic remote logging only?`
+  - iOS when upload token is provided and the request is broad: `Do you want the recommended setup with crash reporting and UI event logging, and should I also configure symbol upload?`
+- the recommended default is to enable crash reporting plus UI event logging when the platform supports them
+- if the user does not answer and there is no contrary signal, proceed with the recommended default
+- if the answer is logging only, keep all optional capabilities off
+- if the answer includes a capability, wire it in for the detected platform
+- if a capability is already strongly implied by the request, skip the question for that capability and enable it
+- if the user answers partially, enable only the capabilities they explicitly approved
+
+Platform mapping defaults:
+
+- iOS:
+  - crash reporting -> `Bugfender.enableCrashReporting()`
+  - UI event logging -> `Bugfender.enableUIEventLogging()`
+  - symbol upload -> add the Xcode Run Script when an upload token is available
+- Android:
+  - crash reporting -> `Bugfender.enableCrashReporting()`
+  - UI event logging -> `Bugfender.enableUIEventLogging(...)`
+  - Android logcat capture -> `Bugfender.enableLogcatLogging()`
+- Flutter:
+  - pass the matching init flags or options for crash reporting, UI event logging, and Android logcat when supported by the platform path
+- React Native / Web / React / Vue / Angular / JavaScript / jQuery / Ionic:
+  - crash or error capture -> `registerErrorHandler: true` when supported
+  - console capture -> `overrideConsoleMethods: true` when supported
+  - UI event logging -> `logUIEvents: true` when supported
+- .NET MAUI:
+  - native crash reporting -> `nativeCrashReporting = true`
+  - MAUI crash reporting -> `mauiCrashReporting = true`
+  - UI event logging -> `logUIEvents = true`
+
 ### Step 3: Map the snippet to the real project
 
 - Find the actual dependency file and initialization entrypoint in the repo.
 - Identify where the Bugfender app key or token should live.
 - Minimize the number of touched files.
 - Preserve the project’s existing patterns and initialization style.
+- If setup context includes extra values such as SDK API URLs, symbolication URLs, or upload tokens, only use them when the detected platform and integration path expose a real configuration hook for them.
+- Do not call out omitted values just to explain that they were not used. Ignore non-applicable values silently unless they block the setup.
 
 Examples:
 
@@ -127,6 +165,8 @@ Keep the close-out narrow: the developer should feel there is only one thing lef
 - Prefer implementation over explanation when the user is asking to set up the SDK in the current repo.
 - Prefer the smallest valid integration over a feature-complete one.
 - Prefer an explicit feature choice over silently enabling optional capabilities.
+- When no feature answer is available, prefer the recommended default over the minimal default: enable crash reporting and UI event logging when the detected platform supports them.
+- Treat crash reporting, console capture, UI event logging, Android logcat capture, feedback wiring, and symbol upload as optional unless the user asked for them, they are already implied by the request, or the user explicitly approves them in the short feature question.
 - Prefer existing project conventions over generic examples.
 - If the repo structure is unclear, inspect more before asking.
 - If the platform cannot be detected confidently, ask one short question instead of presenting multiple speculative setups.
@@ -139,6 +179,7 @@ For explanation-only requests, return:
 - exact files to change
 - minimal code changes
 - one verification step
+- mention optional or unused setup values only when they are relevant to the selected integration path
 
 For implementation requests, return:
 

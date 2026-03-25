@@ -27,8 +27,12 @@ import { Bugfender } from "@bugfender/sdk";
 
 Bugfender.init({
   appKey: "{APP_KEY}",
+  baseURL: "{BASE_URL}",
+  apiURL: "{SDK_API_URL}",
 });
 ```
+
+Only include `baseURL` and `apiURL` when custom non-default URLs are provided.
 
 ## Integration points
 
@@ -48,4 +52,3 @@ After initialization, emit one test log from a known component constructor or st
 ```ts
 Bugfender.log("Bugfender initialized");
 ```
-
