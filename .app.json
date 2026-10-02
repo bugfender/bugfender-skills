@@ -1,0 +1,8 @@
+{
+  "apps": {
+    "bugfender": {
+      "id": "asdk_app_6abe2c470608819180418a63e64b8551",
+      "required": true
+    }
+  }
+}

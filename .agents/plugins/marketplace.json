@@ -1,0 +1,20 @@
+{
+  "name": "bugfender-local",
+  "interface": {
+    "displayName": "Bugfender Local"
+  },
+  "plugins": [
+    {
+      "name": "bugfender",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
