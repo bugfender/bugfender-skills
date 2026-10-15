@@ -1,0 +1,49 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "bugfender",
+  "version": "1.0.0",
+  "description": "Investigate production issues and set up Bugfender SDKs with the hosted Bugfender MCP service.",
+  "author": {
+    "name": "Bugfender",
+    "url": "https://bugfender.com/"
+  },
+  "homepage": "https://bugfender.com/",
+  "repository": "https://github.com/bugfender/bugfender-skills",
+  "keywords": [
+    "bugfender",
+    "observability",
+    "logs",
+    "crashes",
+    "issues",
+    "sdk"
+  ],
+  "extensions": {
+    "com.openai": {
+      "apps": "./.app.json",
+      "interface": {
+        "displayName": "Bugfender",
+        "shortDescription": "Investigate app issues and set up Bugfender",
+        "longDescription": "Connect to Bugfender to investigate logs, crashes, issues, feedback, devices, and regressions. Includes a guided workflow for adding the Bugfender SDK to supported application projects.",
+        "developerName": "Bugfender",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Interactive",
+          "Read",
+          "Write"
+        ],
+        "websiteURL": "https://bugfender.com/",
+        "privacyPolicyURL": "https://bugfender.com/privacy-policy/",
+        "termsOfServiceURL": "https://bugfender.com/terms-of-service/",
+        "supportURL": "https://bugfender.com/contact/",
+        "defaultPrompt": [
+          "Investigate the most important Bugfender issues from the last 24 hours.",
+          "Find regressions in the latest app version and summarize their impact.",
+          "Set up the Bugfender SDK in this repository with the minimum required changes."
+        ],
+        "brandColor": "#315F9B",
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/icon.png"
+      }
+    }
+  }
+}
