@@ -19,19 +19,30 @@ def load(path: str):
 
 manifest = load("plugin.json")
 compatibility_manifest = load(".codex-plugin/plugin.json")
-apps = load(".app.json")
+mcp = load("mcp.json")
+codex_mcp = load(".mcp.json")
 marketplace = load(".agents/plugins/marketplace.json")
 
 assert manifest["name"] == "bugfender"
 assert compatibility_manifest["name"] == manifest["name"]
-assert manifest["extensions"]["com.openai"]["apps"] == "./.app.json"
-assert apps["apps"]["bugfender"]["id"] == "asdk_app_6abe2c470608819180418a63e64b8551"
+assert compatibility_manifest["mcpServers"] == "./.mcp.json"
+assert mcp["mcpServers"]["bugfender"]["url"] == "https://mcp.bugfender.com/mcp"
+assert codex_mcp["mcpServers"]["bugfender"]["url"] == "https://mcp.bugfender.com/mcp"
+interface = manifest["extensions"]["com.openai"]["interface"]
+assert len(interface["displayName"]) <= 30
+assert len(interface["shortDescription"]) <= 30
+assert interface["supportURL"] == "https://docs.bugfender.com/"
+review = manifest["extensions"]["com.openai"]["review"]["test_cases"]
+assert len(review["positive"]) == 5
+assert len(review["negative"]) == 3
 assert marketplace["plugins"][0]["source"]["path"] == "./"
 PY
 
 for path in \
   skills/bugfender/SKILL.md \
   skills/bugfender-sdk-setup/SKILL.md \
+  mcp.json \
+  .mcp.json \
   assets/icon.png; do
   test -f "$path" || {
     printf 'Missing required plugin file: %s\n' "$path" >&2

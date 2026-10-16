@@ -23,7 +23,8 @@ mkdir -p dist
 rm -f "$archive"
 /usr/bin/zip -qr "$archive" \
   plugin.json \
-  .app.json \
+  mcp.json \
+  .mcp.json \
   .codex-plugin \
   skills \
   assets
