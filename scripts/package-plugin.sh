@@ -25,6 +25,7 @@ rm -f "$archive"
   plugin.json \
   mcp.json \
   .mcp.json \
+  .claude-plugin \
   .codex-plugin \
   skills \
   assets

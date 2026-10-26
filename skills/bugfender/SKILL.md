@@ -12,6 +12,8 @@ Use this skill to onboard apps into Bugfender and investigate application health
 ## Prerequisites
 
 - Confirm the Bugfender MCP server is available before relying on this skill.
+- If Bugfender tools are unavailable or return an authentication challenge, tell the user to connect or reconnect the Bugfender connector and complete OAuth. Do not request an API token, refresh token, client secret, or other credential in chat.
+- After authorization, retry the smallest non-mutating identity or discovery call, such as `who_am_i` or `list_apps`, before continuing.
 - Determine the target app first. If the user did not provide an app, call `list_apps`.
 - Narrow the time window early. Avoid broad unbounded searches unless the user explicitly asks for them.
 

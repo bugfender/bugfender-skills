@@ -1,6 +1,6 @@
-# `@bugfender/skills`
+# Bugfender Plugin
 
-Bugfender plugin and companion skills for ChatGPT, Codex, Cursor, and Claude Code.
+Bugfender plugin and companion skills for Claude, ChatGPT, Codex, and compatible agent clients.
 
 ## Included Skills
 
@@ -17,11 +17,11 @@ Bugfender plugin and companion skills for ChatGPT, Codex, Cursor, and Claude Cod
 The repository root is a distributable Bugfender plugin package. It contains:
 
 - the Bugfender investigation and SDK setup skills
-- the registered Bugfender staging MCP connection
+- the hosted Bugfender MCP connection at `https://mcp.bugfender.com/mcp`
 - OpenAI display metadata, starter prompts, legal URLs, and icon
 - a repo-local marketplace entry for ChatGPT and Codex testing
 
-The registered staging connection is `plugin_asdk_app_6abe2c470608819180418a63e64b8551`. OpenAI plugin manifests store its mapped application ID as `asdk_app_6abe2c470608819180418a63e64b8551` in `.app.json`.
+The MCP configuration contains no client secret or user token. Compatible clients discover Bugfender OAuth from the protected resource and authorization-server metadata and store the resulting user grant themselves.
 
 Validate the package before installing it:
 
@@ -65,6 +65,30 @@ Start a fresh ChatGPT or Codex task and run these prompts in order:
 
 Confirm that OAuth linking completes, Bugfender tools are available, investigation remains read-only unless a write is explicitly requested, and the SDK setup skill detects the repository before suggesting changes.
 
+### Install and test with Claude Code
+
+Validate the Claude manifest with a recent Claude Code release:
+
+```bash
+claude plugin validate --strict .
+```
+
+Load the repository for one development session:
+
+```bash
+claude --plugin-dir .
+```
+
+Claude loads the two skills as `/bugfender:bugfender` and `/bugfender:bugfender-sdk-setup`. When a Bugfender tool is used for the first time, complete the OAuth connection in the browser. Do not paste manually provisioned tokens into Claude.
+
+Example requests:
+
+1. `Use Bugfender to tell me who I am.`
+2. `Investigate the highest-impact crash in the last 24 hours without changing anything.`
+3. `Set up the Bugfender SDK in this repository and leave me with one verification step.`
+
+If Claude reports that the connector is unavailable or unauthorized, open the Bugfender MCP connection, complete or repeat OAuth, and retry `who_am_i`. The plugin must not ask for API tokens or client secrets.
+
 ## Install
 
 In the agent chat inside your IDE, run:
@@ -89,6 +113,7 @@ skills/bugfender-sdk-setup/    SDK onboarding workflow
 assets/                        plugin icon
 .app.json                      registered Bugfender MCP connection
 .codex-plugin/plugin.json      Codex compatibility manifest
+.claude-plugin/plugin.json     Claude plugin manifest
 .agents/plugins/marketplace.json repo-local test marketplace
 plugin.json                    portable plugin manifest
 README.md                      installation and usage
