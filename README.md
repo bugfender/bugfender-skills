@@ -39,6 +39,33 @@ The archive is written to `dist/bugfender-plugin-1.0.0.zip`.
 
 For strict validation, evaluations, coordinated versioning, and reproducible release artifacts, see [RELEASING.md](./RELEASING.md).
 
+### Install from the private Claude marketplace
+
+From the repository root:
+
+```bash
+claude plugin marketplace add ./
+claude plugin install bugfender@bugfender-private
+```
+
+Restart Claude Code after installation. Complete Bugfender OAuth in the browser the first time a tool is used; the package contains no client secret or user token.
+
+For development without installing the marketplace entry:
+
+```bash
+claude --plugin-dir .
+```
+
+Upgrade or uninstall the marketplace plugin with:
+
+```bash
+claude plugin update bugfender@bugfender-private
+claude plugin uninstall bugfender@bugfender-private
+claude plugin marketplace remove bugfender-private
+```
+
+Run the isolated clean-install lifecycle test with `./scripts/test-claude-marketplace.sh`. Follow the real OAuth, revocation, and client-preview checks in [Claude marketplace acceptance testing](./docs/claude-marketplace-testing.md).
+
 ### Install from the local marketplace
 
 From the repository root, add the marketplace and install the plugin:
@@ -116,6 +143,7 @@ assets/                        plugin icon
 .app.json                      registered Bugfender MCP connection
 .codex-plugin/plugin.json      Codex compatibility manifest
 .claude-plugin/plugin.json     Claude plugin manifest
+.claude-plugin/marketplace.json private Claude marketplace
 .agents/plugins/marketplace.json repo-local test marketplace
 plugin.json                    portable plugin manifest
 README.md                      installation and usage

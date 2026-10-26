@@ -23,6 +23,7 @@ claude_manifest = load(".claude-plugin/plugin.json")
 mcp = load("mcp.json")
 codex_mcp = load(".mcp.json")
 marketplace = load(".agents/plugins/marketplace.json")
+claude_marketplace = load(".claude-plugin/marketplace.json")
 
 assert manifest["name"] == "bugfender"
 assert compatibility_manifest["name"] == manifest["name"]
@@ -44,6 +45,10 @@ review = manifest["extensions"]["com.openai"]["review"]["test_cases"]
 assert len(review["positive"]) == 5
 assert len(review["negative"]) == 3
 assert marketplace["plugins"][0]["source"]["path"] == "./"
+assert claude_marketplace["name"] == "bugfender-private"
+assert claude_marketplace["version"] == claude_manifest["version"]
+assert claude_marketplace["plugins"][0]["name"] == claude_manifest["name"]
+assert claude_marketplace["plugins"][0]["source"] == "."
 PY
 
 "$python_bin" ./scripts/validate-package.py
@@ -52,6 +57,7 @@ for path in \
   skills/bugfender/SKILL.md \
   skills/bugfender-sdk-setup/SKILL.md \
   .claude-plugin/plugin.json \
+  .claude-plugin/marketplace.json \
   mcp.json \
   .mcp.json \
   assets/icon.png; do

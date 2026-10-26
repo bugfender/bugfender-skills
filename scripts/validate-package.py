@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parent.parent
 PACKAGE_FILES = [
     ROOT / "plugin.json", ROOT / "mcp.json", ROOT / ".mcp.json",
     ROOT / ".codex-plugin/plugin.json", ROOT / ".claude-plugin/plugin.json",
+    ROOT / ".claude-plugin/marketplace.json",
     *sorted((ROOT / "skills").rglob("*")), *sorted((ROOT / "assets").glob("*")),
 ]
 
@@ -34,6 +35,16 @@ versions = {claude["version"], *(manifest["version"] for manifest in manifests)}
 names = {claude["name"], *(manifest["name"] for manifest in manifests)}
 if len(versions) != 1 or len(names) != 1:
     fail(f"Claude, Codex, and portable manifest names/versions must match: names={names}, versions={versions}")
+
+marketplace = load(ROOT / ".claude-plugin/marketplace.json")
+if marketplace.get("version") != claude["version"]:
+    fail("Claude marketplace and plugin manifest versions must match")
+entries = marketplace.get("plugins", [])
+if len(entries) != 1:
+    fail("Claude marketplace must contain exactly one Bugfender plugin entry")
+entry = entries[0]
+if entry.get("name") != claude["name"] or entry.get("source") != ".":
+    fail("Claude marketplace entry must reference the root Bugfender plugin")
 
 for name in [".mcp.json", "mcp.json"]:
     mcp = load(ROOT / name)
@@ -85,4 +96,4 @@ for path in PACKAGE_FILES:
     if secret.search(text):
         fail(f"possible embedded secret found in package file {path.relative_to(ROOT)}")
 
-print("Schema, MCP, skill layout, link, secret, URL, and version validation passed.")
+print("Schema, marketplace, MCP, skill layout, link, secret, URL, and version validation passed.")
