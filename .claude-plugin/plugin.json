@@ -9,6 +9,10 @@
   },
   "homepage": "https://bugfender.com/",
   "repository": "https://github.com/bugfender/bugfender-skills",
+  "documentationUrl": "https://docs.bugfender.com/",
+  "supportUrl": "https://docs.bugfender.com/",
+  "privacyPolicyUrl": "https://bugfender.com/privacy-policy/",
+  "termsOfServiceUrl": "https://bugfender.com/terms-of-service/",
   "license": "Apache-2.0",
   "keywords": [
     "bugfender",

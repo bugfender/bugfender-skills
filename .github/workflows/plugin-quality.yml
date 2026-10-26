@@ -1,0 +1,56 @@
+name: Plugin quality
+
+on:
+  pull_request:
+  push:
+    branches: [main, feat/bf-claude-plugin]
+  workflow_dispatch:
+
+jobs:
+  validate-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: python -m pip install -r requirements-dev.txt
+      - run: npm install --global @anthropic-ai/claude-code
+      - run: ./scripts/validate-release.sh
+      - name: Verify reproducible archive
+        run: |
+          ./scripts/package-plugin.sh
+          first="$(cut -d' ' -f1 dist/*.zip.sha256)"
+          ./scripts/package-plugin.sh
+          second="$(cut -d' ' -f1 dist/*.zip.sha256)"
+          test "$first" = "$second"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bugfender-plugin
+          path: |
+            dist/*.zip
+            dist/*.sha256
+
+  claude-evals:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install --global @anthropic-ai/claude-code
+      - run: claude plugin eval . --runs 1 --ablation none --no-publish --json eval-results.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: claude-eval-results
+          path: |
+            eval-results.json
+            evals/results/

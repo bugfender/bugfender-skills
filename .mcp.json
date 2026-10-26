@@ -1,6 +1,7 @@
 {
   "mcpServers": {
     "bugfender": {
+      "type": "http",
       "url": "https://mcp.bugfender.com/mcp"
     }
   }

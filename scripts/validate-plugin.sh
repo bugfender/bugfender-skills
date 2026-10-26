@@ -46,6 +46,8 @@ assert len(review["negative"]) == 3
 assert marketplace["plugins"][0]["source"]["path"] == "./"
 PY
 
+"$python_bin" ./scripts/validate-package.py
+
 for path in \
   skills/bugfender/SKILL.md \
   skills/bugfender-sdk-setup/SKILL.md \

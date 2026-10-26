@@ -37,6 +37,8 @@ Create the uploadable archive:
 
 The archive is written to `dist/bugfender-plugin-1.0.0.zip`.
 
+For strict validation, evaluations, coordinated versioning, and reproducible release artifacts, see [RELEASING.md](./RELEASING.md).
+
 ### Install from the local marketplace
 
 From the repository root, add the marketplace and install the plugin:
