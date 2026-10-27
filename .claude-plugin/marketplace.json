@@ -1,0 +1,25 @@
+{
+  "name": "bugfender-private",
+  "description": "Private Bugfender plugin marketplace for development and acceptance testing.",
+  "version": "1.0.0",
+  "owner": {
+    "name": "Bugfender",
+    "url": "https://bugfender.com/"
+  },
+  "plugins": [
+    {
+      "name": "bugfender",
+      "source": ".",
+      "description": "Investigate Bugfender apps and set up Bugfender SDKs.",
+      "category": "Developer Tools",
+      "tags": [
+        "bugfender",
+        "observability",
+        "logs",
+        "crashes",
+        "issues",
+        "sdk"
+      ]
+    }
+  ]
+}
