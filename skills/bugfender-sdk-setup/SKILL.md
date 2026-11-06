@@ -9,6 +9,8 @@ description: Set up the Bugfender SDK in an app with minimal developer effort. U
 
 Use this skill to make Bugfender SDK onboarding as hands-off as possible. Detect the project type, fetch the right Bugfender SDK snippet, map it to the real repository structure, apply the minimum correct changes when implementation is requested, and leave the developer with only the final verification step.
 
+If Bugfender tools are unavailable or return an authentication challenge, ask the user to connect or reconnect the Bugfender connector and complete OAuth. Never ask the user to paste an API token, refresh token, client secret, or app credential into chat. After authorization, retry `list_apps` or the intended `get_sdk_snippet` call.
+
 ## Workflow
 
 ### Step 1: Detect the target
