@@ -98,6 +98,7 @@
         "commerce": false
       },
       "publication": {
+        "countries": [],
         "release_notes": "Initial Bugfender plugin release with hosted MCP investigations and guided SDK setup skills."
       }
     }
