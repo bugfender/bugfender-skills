@@ -12,4 +12,4 @@ Claude, Codex, and portable manifests share one version and one `skills/` tree. 
 8. Test the ZIP with `claude --plugin-dir dist/bugfender-plugin-<version>.zip` and the repository through the Codex local marketplace.
 9. Commit, tag, and attach the ZIP plus its `.sha256` file to the release. Do not publish one client package from a different commit than the other.
 
-CI always runs deterministic validation. The model-backed evaluation job runs when `ANTHROPIC_API_KEY` is configured and can also be started manually.
+CI runs deterministic validation, marketplace lifecycle testing, and reproducible packaging.
