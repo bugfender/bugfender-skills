@@ -9,9 +9,9 @@ if [[ -e "$output_dir" ]]; then
 fi
 mkdir -p "$output_dir/.claude-plugin"
 
-cp -R "$repo_root/skills" "$output_dir/skills"
+cp -R "$repo_root/claude-directory/skills" "$output_dir/skills"
 cp -R "$repo_root/assets" "$output_dir/assets"
-cp "$repo_root/.claude-plugin/plugin.json" "$output_dir/.claude-plugin/plugin.json"
+cp "$repo_root/claude-directory/.claude-plugin/plugin.json" "$output_dir/.claude-plugin/plugin.json"
 cp "$repo_root/.mcp.local.json" "$output_dir/.mcp.json"
 cp "$repo_root/README.md" "$output_dir/README.md"
 

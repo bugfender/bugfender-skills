@@ -15,7 +15,7 @@ Check:
 Install:
 
 ```bash
-dotnet add package Bugfender.Sdk --version 3.0.0
+dotnet add package Bugfender.Sdk
 ```
 
 For iOS:

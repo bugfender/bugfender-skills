@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "bugfender",
-      "source": ".",
+      "source": "./claude-directory",
       "description": "Investigate Bugfender apps and set up Bugfender SDKs.",
       "category": "Developer Tools",
       "tags": [

@@ -13,4 +13,5 @@ if ! command -v claude >/dev/null 2>&1; then
 fi
 
 claude plugin validate --strict .
+claude plugin validate --strict ./claude-directory
 printf 'Strict Claude and shared package validation passed.\n'

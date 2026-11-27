@@ -16,8 +16,8 @@ Prefer `lib/main.dart` as the integration point.
 Add the dependency in `pubspec.yaml`:
 
 ```yaml
-dev_dependencies:
-  flutter_bugfender: ^2.3.0
+dependencies:
+  flutter_bugfender: ^5.0.0
 ```
 
 Then run:

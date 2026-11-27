@@ -1,8 +1,8 @@
 # Releasing the Bugfender plugin
 
-Claude, Codex, and portable manifests share one version and one `skills/` tree. Never copy or fork skill content per client.
+Claude, Codex, and portable manifests share one version and the canonical `claude-directory/skills/` tree. Never copy or fork skill content per client.
 
-1. Update the version in `plugin.json`, `.codex-plugin/plugin.json`, `.claude-plugin/plugin.json`, and `.claude-plugin/marketplace.json` in the same change.
+1. Update the version in `plugin.json`, `.codex-plugin/plugin.json`, `claude-directory/.claude-plugin/plugin.json`, and `.claude-plugin/marketplace.json` in the same change.
 2. Install validation dependencies with `python3 -m pip install -r requirements-dev.txt` and install the current Claude Code CLI.
 3. Run `./scripts/validate-release.sh`.
 4. Run deterministic plugin evaluations with `claude plugin eval . --runs 1 --ablation none --no-publish`. Before a public release, repeat with the default three runs.
@@ -10,6 +10,6 @@ Claude, Codex, and portable manifests share one version and one `skills/` tree. 
 6. Inspect the ZIP. It must contain both manifests, the shared `.mcp.json`, shared skills, references, and assets; it must not contain eval results, credentials, local URLs, or build-machine metadata.
 7. Run `./scripts/test-claude-marketplace.sh`, then complete the [Claude marketplace acceptance checklist](./docs/claude-marketplace-testing.md) against the real client.
 8. Test the ZIP with `claude --plugin-dir dist/bugfender-plugin-<version>.zip` and the repository through the Codex local marketplace.
-9. Commit, tag, and attach the ZIP plus its `.sha256` file to the release. Do not publish one client package from a different commit than the other.
+9. Submit the `claude-directory/` subfolder to the Claude Directory. Commit, tag, and attach the ZIP plus its `.sha256` file to the release. Do not publish one client package from a different commit than the other.
 
 CI runs deterministic validation, marketplace lifecycle testing, and reproducible packaging.

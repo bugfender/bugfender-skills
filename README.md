@@ -4,8 +4,8 @@ Bugfender plugin and companion skills for Claude, ChatGPT, Codex, and compatible
 
 ## Included Skills
 
-- `skills/bugfender`: investigate crashes, issues, feedback, devices, and logs through the Bugfender MCP server
-- `skills/bugfender-sdk-setup`: detect the target platform, fetch the canonical Bugfender SDK snippet, and adapt setup steps to a real repository
+- `claude-directory/skills/bugfender`: investigate crashes, issues, feedback, devices, and logs through the Bugfender MCP server
+- `claude-directory/skills/bugfender-sdk-setup`: detect the target platform, fetch the canonical Bugfender SDK snippet, and adapt setup steps to a real repository
 
 ## Requirements
 
@@ -53,7 +53,7 @@ Restart Claude Code after installation. Complete Bugfender OAuth in the browser 
 For development without installing the marketplace entry:
 
 ```bash
-claude --plugin-dir .
+claude --plugin-dir ./claude-directory
 ```
 
 Upgrade or uninstall the marketplace plugin with:
@@ -68,9 +68,10 @@ Run the isolated clean-install lifecycle test with `./scripts/test-claude-market
 
 ### Install from the local marketplace
 
-From the repository root, add the marketplace and install the plugin:
+From the repository root, build the local package, then add the marketplace and install the plugin:
 
 ```bash
+./scripts/package-plugin.sh
 codex plugin marketplace add .
 codex plugin add bugfender@bugfender-local
 ```
@@ -99,13 +100,13 @@ Confirm that OAuth linking completes, Bugfender tools are available, investigati
 Validate the Claude manifest with a recent Claude Code release:
 
 ```bash
-claude plugin validate --strict .
+claude plugin validate --strict ./claude-directory
 ```
 
 Load the repository for one development session:
 
 ```bash
-claude --plugin-dir .
+claude --plugin-dir ./claude-directory
 ```
 
 Claude loads the two skills as `/bugfender:bugfender` and `/bugfender:bugfender-sdk-setup`. When a Bugfender tool is used for the first time, complete the OAuth connection in the browser. Do not paste manually provisioned tokens into Claude.
@@ -124,8 +125,8 @@ In the agent chat inside your IDE, run:
 
 ```text
 Use $skill-installer to install these skills from https://github.com/bugfender/bugfender-skills:
-- skills/bugfender
-- skills/bugfender-sdk-setup
+- claude-directory/skills/bugfender
+- claude-directory/skills/bugfender-sdk-setup
 ```
 
 After installation, restart the client and use:
@@ -137,12 +138,12 @@ Use $bugfender-sdk-setup to set up Bugfender in this app with the minimum requir
 ## Repository Layout
 
 ```text
-skills/bugfender/              investigation workflow
-skills/bugfender-sdk-setup/    SDK onboarding workflow
+claude-directory/skills/bugfender/              investigation workflow
+claude-directory/skills/bugfender-sdk-setup/    SDK onboarding workflow
+claude-directory/.mcp.json                     hosted MCP configuration
+claude-directory/.claude-plugin/plugin.json    Claude plugin manifest
 assets/                        plugin icon
-.app.json                      registered Bugfender MCP connection
 .codex-plugin/plugin.json      Codex compatibility manifest
-.claude-plugin/plugin.json     Claude plugin manifest
 .claude-plugin/marketplace.json private Claude marketplace
 .agents/plugins/marketplace.json repo-local test marketplace
 plugin.json                    portable plugin manifest

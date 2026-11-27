@@ -6,10 +6,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 PACKAGE_FILES = [
-    ROOT / "plugin.json", ROOT / "mcp.json", ROOT / ".mcp.json",
-    ROOT / ".codex-plugin/plugin.json", ROOT / ".claude-plugin/plugin.json",
+    ROOT / "plugin.json", ROOT / "mcp.json", ROOT / "claude-directory/.mcp.json",
+    ROOT / ".codex-plugin/plugin.json", ROOT / "claude-directory/.claude-plugin/plugin.json",
     ROOT / ".claude-plugin/marketplace.json",
-    *sorted((ROOT / "skills").rglob("*")), *sorted((ROOT / "assets").glob("*")),
+    *sorted((ROOT / "claude-directory/skills").rglob("*")),
+    *sorted((ROOT / "assets").glob("*")),
+    *sorted((ROOT / "openai-agents").rglob("*")),
 ]
 
 def fail(message: str) -> None:
@@ -22,7 +24,7 @@ def load(path: Path):
     except Exception as error:
         fail(f"{path.relative_to(ROOT)} is not valid JSON: {error}")
 
-claude = load(ROOT / ".claude-plugin/plugin.json")
+claude = load(ROOT / "claude-directory/.claude-plugin/plugin.json")
 schema = load(ROOT / "schemas/claude-plugin.schema.json")
 try:
     import jsonschema
@@ -43,20 +45,20 @@ entries = marketplace.get("plugins", [])
 if len(entries) != 1:
     fail("Claude marketplace must contain exactly one Bugfender plugin entry")
 entry = entries[0]
-if entry.get("name") != claude["name"] or entry.get("source") != ".":
-    fail("Claude marketplace entry must reference the root Bugfender plugin")
+if entry.get("name") != claude["name"] or entry.get("source") != "./claude-directory":
+    fail("Claude marketplace entry must reference the directory-safe Bugfender plugin")
 
-for name in [".mcp.json", "mcp.json"]:
+for name in ["claude-directory/.mcp.json", "mcp.json"]:
     mcp = load(ROOT / name)
     server = mcp.get("mcpServers", {}).get("bugfender", {})
     if server.get("url") != "https://mcp.bugfender.com/mcp":
         fail(f"{name} must use the production Bugfender MCP URL")
     if set(server) - {"type", "url"}:
         fail(f"{name} contains unsupported or credential-bearing MCP fields")
-    if name == ".mcp.json" and server.get("type") != "http":
+    if name == "claude-directory/.mcp.json" and server.get("type") != "http":
         fail(".mcp.json must declare the remote server type as http")
 
-for skill_file in sorted((ROOT / "skills").glob("*/SKILL.md")):
+for skill_file in sorted((ROOT / "claude-directory/skills").glob("*/SKILL.md")):
     text = skill_file.read_text(encoding="utf-8")
     match = re.match(r"^---\n(.*?)\n---\n", text, re.DOTALL)
     if not match:
@@ -79,7 +81,7 @@ for case in sorted(required_cases):
         fail(f"eval case {case} needs prompt frontmatter and at least one grader")
 
 local_link = re.compile(r"\[[^]]*]\((?!https?://|mailto:|#)([^)]+)\)")
-for markdown in sorted([ROOT / "README.md", *(ROOT / "skills").rglob("*.md")]):
+for markdown in sorted([ROOT / "README.md", *(ROOT / "claude-directory/skills").rglob("*.md")]):
     for target in local_link.findall(markdown.read_text(encoding="utf-8")):
         clean = target.split("#", 1)[0]
         if clean and not (markdown.parent / clean).resolve().is_file():

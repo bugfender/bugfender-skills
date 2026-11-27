@@ -17,7 +17,7 @@ Prefer the package manager already used by the repo.
 Preferred install paths:
 
 - Swift Package Manager: `https://github.com/bugfender/BugfenderSDK-iOS`
-- CocoaPods: `pod 'BugfenderSDK', '~> 1.10'`
+- CocoaPods: `pod 'BugfenderSDK', '3.1.1'`
 - Carthage only if the repo already uses Carthage
 
 Initialize in `application(_:didFinishLaunchingWithOptions:)`:

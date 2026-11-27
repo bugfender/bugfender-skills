@@ -13,7 +13,7 @@ fi
 test_root="$(mktemp -d "${TMPDIR:-/tmp}/bugfender-claude-marketplace.XXXXXX")"
 config_dir="$test_root/config"
 mkdir -p "$config_dir"
-plugin_version="$(python3 -c 'import json; print(json.load(open(".claude-plugin/plugin.json"))["version"])' < /dev/null)"
+plugin_version="$(python3 -c 'import json; print(json.load(open("claude-directory/.claude-plugin/plugin.json"))["version"])' < /dev/null)"
 
 cleanup() {
   find "$test_root" -depth -delete 2>/dev/null || true

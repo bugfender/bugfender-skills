@@ -27,4 +27,3 @@ https://github.com/aca-mobile/titanium-bugfender
 ## Verification
 
 Point the user to the module’s setup steps and confirm the first log reaches Bugfender after integration.
-

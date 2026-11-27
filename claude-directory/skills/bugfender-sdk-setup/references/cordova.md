@@ -44,4 +44,3 @@ If custom URLs are required, include:
 ## Verification
 
 Run on an emulator or real device, not the browser platform, and confirm the first log reaches Bugfender.
-

@@ -18,13 +18,13 @@ Prefer updating an existing `Application` class over creating a new one.
 Add the dependency under the app module dependencies:
 
 ```kotlin
-implementation("com.bugfender.sdk:android:3.+")
+implementation("com.bugfender.sdk:android:4.1.0")
 ```
 
 or Groovy:
 
 ```groovy
-implementation 'com.bugfender.sdk:android:3.+'
+implementation 'com.bugfender.sdk:android:4.1.0'
 ```
 
 Initialize in the `Application` class `onCreate()`:

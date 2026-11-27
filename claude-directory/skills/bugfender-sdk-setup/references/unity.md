@@ -36,4 +36,3 @@ Then:
 ## Verification
 
 Use `Bugfender.Log(...)` from a known startup path and confirm the first session appears in Bugfender.
-

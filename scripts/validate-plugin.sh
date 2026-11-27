@@ -19,9 +19,9 @@ def load(path: str):
 
 manifest = load("plugin.json")
 compatibility_manifest = load(".codex-plugin/plugin.json")
-claude_manifest = load(".claude-plugin/plugin.json")
+claude_manifest = load("claude-directory/.claude-plugin/plugin.json")
 mcp = load("mcp.json")
-codex_mcp = load(".mcp.json")
+codex_mcp = load("claude-directory/.mcp.json")
 marketplace = load(".agents/plugins/marketplace.json")
 claude_marketplace = load(".claude-plugin/marketplace.json")
 
@@ -44,22 +44,23 @@ assert interface["supportURL"] == "https://docs.bugfender.com/"
 review = manifest["extensions"]["com.openai"]["review"]["test_cases"]
 assert len(review["positive"]) == 5
 assert len(review["negative"]) == 3
-assert marketplace["plugins"][0]["source"]["path"] == "./"
+assert marketplace["plugins"][0]["source"]["path"] == "./dist/bugfender-plugin"
 assert claude_marketplace["name"] == "bugfender-private"
 assert claude_marketplace["version"] == claude_manifest["version"]
 assert claude_marketplace["plugins"][0]["name"] == claude_manifest["name"]
-assert claude_marketplace["plugins"][0]["source"] == "."
+assert claude_marketplace["plugins"][0]["source"] == "./claude-directory"
 PY
 
 "$python_bin" ./scripts/validate-package.py
 
 for path in \
-  skills/bugfender/SKILL.md \
-  skills/bugfender-sdk-setup/SKILL.md \
-  .claude-plugin/plugin.json \
+  claude-directory/skills/bugfender/SKILL.md \
+  claude-directory/skills/bugfender-sdk-setup/SKILL.md \
+  claude-directory/.claude-plugin/plugin.json \
+  claude-directory/.claude-plugin/icon.png \
   .claude-plugin/marketplace.json \
   mcp.json \
-  .mcp.json \
+  claude-directory/.mcp.json \
   assets/icon.png; do
   test -f "$path" || {
     printf 'Missing required plugin file: %s\n' "$path" >&2
